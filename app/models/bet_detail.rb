@@ -4,7 +4,7 @@ class BetDetail < ActiveRecord::Base
 
   enum bet_status: { in_process: 0, loss: 1, won: 2}
 
-  validates :bet_number, :amount, presence: true
+  validates :bet_number, :amount, presence: true, inclusion: { in: (1..36) }
 
   after_create :update_timestamp
   after_create :update_user_balance

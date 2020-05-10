@@ -29,7 +29,7 @@ class Api::V1::CasinosController < ApplicationController
   end
 
   def list_all_casinos
-  	casinos = Casino.all.to_json(only: [:id, :name])
+  	casinos = Casino.order(id: :asc).all.to_json(only: [:id, :name, :balance_amount])
   	render json: casinos, status: 200
   end
 
@@ -40,7 +40,7 @@ class Api::V1::CasinosController < ApplicationController
   end
 
   def create_casino_params
-  	params.require(:casino).permit(:name)
+  	params.require(:casino).permit(:name, :balance_amount)
   end
 
   def update_casino_params

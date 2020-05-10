@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   
-  before_action :get_user, only: [:update_balance, :enter_casino, :bettable_games, :bet_game]
+  before_action :get_user, only: [:update_balance, :enter_casino, :bettable_games, :bet_game, :cash_out]
   before_action :get_game, only: [:bet_game]
 
   def create
@@ -34,16 +34,24 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def users_list
-    users = User.all.to_json(only: [:id, :current_casino_id])
+    users = User.order(id: :asc).all.to_json(only: [:id, :balance_amount, :current_casino_id])
     render json: users, status: 200
   end
 
   def bet_game
-    bet = BetDetail.new(bet_game_params)
-    if @user && @game && bet.save
+    if @user && @game && BetDetail.create(bet_game_params).id.present?
       render json: {success: 'success'}, status: 200
     else
       render json: {error: 'error'}, status: 422
+    end
+  end
+
+  def cash_out
+    cash_out_amount = user_params['balance_amount']
+    if @user && @user.update_balance(-cash_out_amount)
+      render json: {success: 'success'}, status: 200
+    else
+      render json: {error: 'Error'}, status: 400
     end
   end
 

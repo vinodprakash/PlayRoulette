@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post '/enter_casino/:user_id', to: 'users#enter_casino'
       get '/bettable_games/:user_id', to: 'users#bettable_games'
       post '/bet_game/:user_id/:game_id', to: 'users#bet_game'
+      post '/cash_out/:user_id', to: 'users#cash_out'
     end
   end
 

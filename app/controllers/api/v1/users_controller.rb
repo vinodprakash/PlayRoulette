@@ -9,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
   	if user.save
   		render json: {success: 'success'}, status: 200
   	else
-  		render json: {error: 'error'}, status: 400
+  		render json: {error: 'error'}, status: 422
   	end
   end
 
@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
     if @user && @user.update_balance(user_params)
       render json: {success: 'success'}, status: 200
     else
-      render json: {error: 'Error'}, status: 422
+      render json: {error: 'error'}, status: 422
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
     if @user && @casino && @user.update(user_params) 
       render json: {success: 'success'}, status: 200
     else
-      render json: {error: 'Error'}, status: 422
+      render json: {error: 'error'}, status: 422
     end
   end
 
@@ -52,7 +52,7 @@ class Api::V1::UsersController < ApplicationController
     if @user && @user.update_balance(-cash_out_amount)
       render json: {success: 'success'}, status: 200
     else
-      render json: {error: 'Error'}, status: 400
+      render json: {error: 'error'}, status: 422
     end
   end
 

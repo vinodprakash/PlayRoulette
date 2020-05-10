@@ -8,7 +8,7 @@ class Api::V1::DealersController < ApplicationController
   	if dealer.save
   		render json: {success: 'success'}, status: 200
   	else
-  		render json: {error: 'error'}, status: 400
+  		render json: {error: 'error'}, status: 422
   	end
   end
 
@@ -16,7 +16,7 @@ class Api::V1::DealersController < ApplicationController
     if @dealer.no_active_games && @dealer.games.create
       render json: {success: 'success'}, status: 200
     else
-      render json: {error: 'error'}, status: 400
+      render json: {error: 'error'}, status: 422
     end
   end
 
@@ -26,10 +26,10 @@ class Api::V1::DealersController < ApplicationController
       if active_game && active_game.update(end_time: DateTime.now)
         render json: {success: 'success'}, status: 200
       else
-        render json: {error: 'No Active Game'}, status: 422
+        render json: {error: 'error'}, status: 422
       end
     else
-      render json: {error: 'Error'}, status: 422
+      render json: {error: 'error'}, status: 422
     end
   end
 
@@ -40,10 +40,10 @@ class Api::V1::DealersController < ApplicationController
         UpdateUserBalanceWorker.perform_async(active_game.id)
         render json: {success: 'success'}, status: 200
       else
-        render json: {error: 'Error'}, status: 422
+        render json: {error: 'error'}, status: 422
       end
     else
-      render json: {error: 'Error'}, status: 422
+      render json: {error: 'error'}, status: 422
     end
   end
 

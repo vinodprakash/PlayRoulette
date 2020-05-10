@@ -2,6 +2,7 @@ class Api::V1::UsersController < ApplicationController
   
   before_action :get_user, only: [:update_balance, :enter_casino, :bettable_games, :bet_game, :cash_out]
   before_action :get_game, only: [:bet_game]
+  before_action :get_casino, only: [:enter_casino]
 
   def create
   	user = User.new(user_params)
@@ -21,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def enter_casino
-    if @user && @user.update(user_params) 
+    if @user && @casino && @user.update(user_params) 
       render json: {success: 'success'}, status: 200
     else
       render json: {error: 'Error'}, status: 422
@@ -62,7 +63,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def get_game
-    @game = Game.find(params[:game_id])
+    @game = Game.find_by(id: params[:game_id], status: Game.statuses[:start])
   end
 
   def user_params
@@ -71,5 +72,9 @@ class Api::V1::UsersController < ApplicationController
 
   def bet_game_params
     params.permit(:user_id, :game_id, :amount, :bet_number)
+  end
+
+  def get_casino
+    @casino = Casino.find_by(id: user_params[:current_casino_id])
   end
 end

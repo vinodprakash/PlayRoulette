@@ -11,7 +11,7 @@ class UpdateUserBalanceWorker
 			won_bet.user.update_balance(won_amount)
 			amount_from_casino += won_amount
 		end
-		active_game.dealer.casino.update_balance(amount_from_casino)
+		active_game.dealer.casino.update_balance(-amount_from_casino)
 		# Won bets
 
 		# Lost bets

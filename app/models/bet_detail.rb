@@ -6,14 +6,14 @@ class BetDetail < ActiveRecord::Base
 
   validates :bet_number, :amount, presence: true, inclusion: { in: (1..36) }
 
-  after_create :update_timestamp
+  before_create :update_timestamp
   after_create :update_user_balance
 
   def update_timestamp
-  	self.update_column("betting_time", Time.now)
+  	self.betting_time = Time.now
   end
 
   def update_user_balance
-  	self.user.update_balance(-self.amount)
+  	raise ActiveRecord::Rollback unless self.user.update_balance(-self.amount)
   end
 end

@@ -7,7 +7,7 @@ class Api::V1::CasinosController < ApplicationController
   	if casino.save
   		render json: {success: 'success'}, status: 200
   	else
-  		render json: {error: 'error'}, status: 400
+  		render json: {error: 'error'}, status: 422
   	end
   end
 
@@ -16,7 +16,7 @@ class Api::V1::CasinosController < ApplicationController
   		dealers = @casino.dealers.order(id: :asc).to_json(only: [:id, :name])
   		render json: dealers, status: 200
   	else
-  		render json: {error: 'Invalid Casino'}, status: 422
+  		render json: {error: 'error'}, status: 422
   	end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::CasinosController < ApplicationController
   	if @casino && @casino.update_balance(update_casino_params)
   		render json:{success: 'success'}, status: 200
   	else
-  		render json: {error: 'Error'}, status: 422
+  		render json: {error: 'error'}, status: 422
   	end
   end
 

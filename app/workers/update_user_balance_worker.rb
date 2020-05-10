@@ -7,11 +7,12 @@ class UpdateUserBalanceWorker
 		won_bets = active_game.bet_details.where(bet_number: active_game.thrown_number)
 		amount_from_casino = 0
 		won_bets.each do |won_bet|
-			won_amount = won_bet.amount * 2
+			won_amount = won_bet.amount * PROFIT_RATIO
 			won_bet.user.update_balance(won_amount)
 			amount_from_casino += won_amount
 		end
-		active_game.dealer.casino.update_balance(amount_from_casino)
+		won_bets.update_all(bet_status: BetDetail.bet_statuses[:won])
+		active_game.dealer.casino.update_balance(-(amount_from_casino/PROFIT_RATIO))
 		# Won bets
 
 		# Lost bets

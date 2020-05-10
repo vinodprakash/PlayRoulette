@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dealer_id: 
+  start_time: 2020-05-10 13:06:15
+  end_time: 2020-05-10 13:06:15
+  status: 1
+  thrown_number: 1
+
+two:
+  dealer_id: 
+  start_time: 2020-05-10 13:06:15
+  end_time: 2020-05-10 13:06:15
+  status: 1
+  thrown_number: 1

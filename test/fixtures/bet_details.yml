@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bet_number: 1
+  amount: 1
+  betting_time: 2020-05-10 13:07:32
+  user_id: 
+  game_id: 
+  bet_status: 1
+
+two:
+  bet_number: 1
+  amount: 1
+  betting_time: 2020-05-10 13:07:32
+  user_id: 
+  game_id: 
+  bet_status: 1

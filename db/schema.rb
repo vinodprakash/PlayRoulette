@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200510073732) do
+ActiveRecord::Schema.define(version: 20200510094234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20200510073732) do
     t.datetime "betting_time"
     t.integer  "user_id"
     t.integer  "game_id"
-    t.integer  "bet_status"
+    t.integer  "bet_status",   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20200510073732) do
 
   create_table "casinos", force: true do |t|
     t.string   "name"
-    t.integer  "balance_amount"
+    t.integer  "balance_amount", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20200510073732) do
     t.integer  "dealer_id"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.integer  "status"
+    t.integer  "status",        default: 0
     t.integer  "thrown_number"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20200510073732) do
 
   create_table "users", force: true do |t|
     t.string   "name"
-    t.integer  "balance_amount"
+    t.integer  "balance_amount",    default: 0
     t.integer  "current_casino_id"
     t.datetime "created_at"
     t.datetime "updated_at"

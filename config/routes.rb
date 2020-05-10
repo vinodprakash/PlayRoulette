@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       post '/update_user_balance/:user_id', to: 'users#update_balance'
       post '/enter_casino/:user_id', to: 'users#enter_casino'
       get '/bettable_games/:user_id', to: 'users#bettable_games'
+      post '/bet_game/:user_id/:game_id', to: 'users#bet_game'
     end
   end
 

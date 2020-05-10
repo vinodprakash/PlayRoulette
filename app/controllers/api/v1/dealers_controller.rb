@@ -37,6 +37,7 @@ class Api::V1::DealersController < ApplicationController
     if @dealer
       active_game = @dealer.last_ended_game
       if active_game && active_game.update(thrown_number: params[:thrown_number])
+        UpdateUserBalanceWorker.perform(active_game.id)
         render json: {success: 'success'}, status: 200
       else
         render json: {error: 'Error'}, status: 422

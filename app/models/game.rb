@@ -10,7 +10,7 @@ class Game < ActiveRecord::Base
   after_update :update_status
 
   def update_timestamp
-  	self.update(start_time: Time.now)
+  	self.update_column("start_time", Time.now)
   end
 
   def update_status

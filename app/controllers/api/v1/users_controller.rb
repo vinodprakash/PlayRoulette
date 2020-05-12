@@ -30,8 +30,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def bettable_games
-    active_games = Game.joins(dealer: :casino).where(casinos: {id: @user.current_casino_id}).where(games: {status: Game.statuses[:start]}).to_json(only: [:id, :dealer_id])
-    render json: active_games, status: 200
+    if @user
+      active_games = Game.joins(dealer: :casino).where(casinos: {id: @user.current_casino_id}).where(games: {status: Game.statuses[:start]}).to_json(only: [:id, :dealer_id])
+      render json: active_games, status: 200
+    else
+      render json: {error: 'error'}, status: 422
+    end
   end
 
   def users_list
@@ -48,7 +52,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def cash_out
-    cash_out_amount = user_params['balance_amount']
+    cash_out_amount = user_params['balance_amount'].to_i
     if @user && @user.update_balance(-cash_out_amount)
       render json: {success: 'success'}, status: 200
     else

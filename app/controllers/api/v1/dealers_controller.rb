@@ -4,8 +4,8 @@ class Api::V1::DealersController < ApplicationController
   before_action :get_dealer, only: [:start_game, :end_game, :thrown_number]
 
   def create
-  	dealer = @casino.dealers.new(create_dealer_params)
-  	if dealer.save
+  	dealer = @casino.dealers.new(create_dealer_params) rescue nil
+  	if @casino && dealer.save
   		render json: {success: 'success'}, status: 200
   	else
   		render json: {error: 'error'}, status: 422
@@ -13,7 +13,7 @@ class Api::V1::DealersController < ApplicationController
   end
 
   def start_game
-    if @dealer.no_active_games && @dealer.games.create
+    if @dealer && @dealer.no_active_games && @dealer.games.create
       render json: {success: 'success'}, status: 200
     else
       render json: {error: 'error'}, status: 422
@@ -36,7 +36,7 @@ class Api::V1::DealersController < ApplicationController
   def thrown_number
     if @dealer
       active_game = @dealer.last_ended_game
-      if active_game && active_game.update(thrown_number: params[:thrown_number])
+      if active_game && params[:thrown_number].present? && active_game.update(thrown_number: params[:thrown_number])
         UpdateUserBalanceWorker.perform_async(active_game.id)
         render json: {success: 'success'}, status: 200
       else

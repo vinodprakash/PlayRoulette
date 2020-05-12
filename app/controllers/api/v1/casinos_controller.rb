@@ -21,7 +21,7 @@ class Api::V1::CasinosController < ApplicationController
   end
 
   def update_balance
-  	if @casino && @casino.update_balance(update_casino_params)
+  	if @casino && @casino.update_balance(create_casino_params)
   		render json:{success: 'success'}, status: 200
   	else
   		render json: {error: 'error'}, status: 422
@@ -43,7 +43,7 @@ class Api::V1::CasinosController < ApplicationController
   	params.require(:casino).permit(:name, :balance_amount)
   end
 
-  def update_casino_params
-  	params.require(:casino).permit(:balance_amount)
-  end
+  # def update_casino_params
+  # 	params.require(:casino).permit(:balance_amount)
+  # end
 end
